@@ -7,8 +7,8 @@
             "args": [
                 "-fdiagnostics-color=always",
                 "-g",
-                "${workspaceFolder}/82 class template seperate files.cpp",
-                "${workspaceFolder}/82 person.cpp",
+                "${workspaceFolder}/03 competition system based on stl/00 competition manage system.cpp",
+                "${workspaceFolder}/03 competition system based on stl/01 interface function.cpp",
                 "-o",
                 "${fileDirname}/${fileBasenameNoExtension}"
             ],
