@@ -4,8 +4,6 @@ interface::interface(){
 
     this->init_comp();
 
-    this->create_competitor();
-
 };
 
 interface::~interface(){
@@ -24,12 +22,15 @@ void interface:: show_manu(){
 };
 
 void interface:: init_comp(){
+    srand(static_cast<unsigned int>(time(0)));
     this->v1.clear();
     this->v2.clear();
     this->v3.clear();
     this->competitor_map.clear();
 
+    this->create_competitor();
     this->round=1;
+    record.clear();
 }
 
 void interface:: create_competitor(){
@@ -94,6 +95,7 @@ void interface:: contest(){
     for(vector<int>::iterator it = competitor_group.begin(); it!=competitor_group.end(); it++){
         group_num++;
         deque<double>d;
+        
         for(int i =0;i<10; i++){
             double score = (rand()%401+600)/10.f;
             d.push_back(score);
@@ -181,8 +183,84 @@ void interface:: start_competition(){
     show_score();
 
     save_record();
+    init_comp();
 }
 
+void interface:: load_record(){
+    ifstream ifs("competition.csv", ios::in);
+    if(!ifs.is_open()){
+        record_file_is_empty=true;
+        cout<< "record does not exist"<< endl;
+        ifs.close();
+        return;
+    }
+
+    char ch;
+    ifs>> ch;
+    if(ifs.eof()){
+        cout<< "record is empty"<< endl;
+        record_file_is_empty =true;
+        ifs.close();
+        return;
+    }
+
+    record_file_is_empty=false;
+    ifs.putback(ch);
+    string data;
+    int index=1;
+    while(getline(ifs, data)){
+        int pos =-1;
+        int start_pos =0;
+
+        vector<string> v;
+
+        while(true){
+            pos = data.find(',',start_pos);
+            if (pos == -1){
+                break;
+            }
+
+            string line=data.substr(start_pos,pos-start_pos);
+            v.push_back(line);
+
+            start_pos = pos+1;
+        }
+
+        record.insert(make_pair(index, v));
+        index++;
+
+    }
+    ifs.close();
+
+}
+
+void interface:: show_record(){
+    load_record();
+
+    for(map<int, vector<string> >:: iterator it= record.begin(); it!=record.end(); it++){
+        cout<< "No. "<< it->first<< " competition's first place is "<< it->second[1]<< " with a score of "<< it->second[2]<< endl;
+        cout<< "The second and third place are "<< it->second[4]<< " and "<< it->second[7]<< endl;
+    }
+}
+
+void interface:: clear_record(){
+    cout<<"Are you sure you want to clear the past record?"<< endl;
+    cout<<"1. Yes"<< endl;
+    cout<<"2. No"<< endl;
+
+    int input;
+    cin>> input;
+
+    if(input==1){
+        ofstream ofs("competition.csv",ios::trunc);
+        ofs.close();
+        init_comp();
+        cout<< "complete!"<< endl;   
+    }
+    else{
+        cout<< "Invalid input"<< endl;
+    }
+}
 
 void interface:: exit_system(){
     cout<< endl;

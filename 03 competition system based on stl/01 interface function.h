@@ -8,6 +8,7 @@
 #include<algorithm>
 #include<functional>
 #include<numeric>
+#include<time.h>
 using namespace std;
 #include"02 competitor.h"
 
@@ -21,6 +22,10 @@ class interface{
 
     int round;
 
+    bool record_file_is_empty;
+
+    map<int, vector<string> > record;
+
     interface();
 
     ~interface();
@@ -33,6 +38,9 @@ class interface{
     void show_score();
     void start_competition();
     void save_record();
+    void load_record();
+    void show_record();
+    void clear_record();
     void exit_system();
     
 };

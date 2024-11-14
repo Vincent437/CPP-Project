@@ -19,10 +19,10 @@ int main(){
             break;
         
         case 2:
-
+            interface_manager.show_record();
             break;
         case 3:
-
+            interface_manager.clear_record();
             break;
         case 0:
             interface_manager.exit_system();
