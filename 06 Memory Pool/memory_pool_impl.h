@@ -23,7 +23,7 @@ MemoryPool<T,BlockSize>::~MemoryPool() noexcept
 	while (curr != nullptr)
 	{
 		slot_pointer_ prev = curr->next;
-		operator delete(reinterpret_cast<void*>(curr));
+		operator delete(reinterpret_cast<void*>(curr));//全局delete，不会使得delete表达式调用析构函数
 		curr = prev;
 	}
 }
@@ -43,7 +43,7 @@ pointer MemoryPool<T,BlockSize>::allocate(size_t n, const T* hint)
 
 		return result;
 	}
-	// 空闲对象槽指针为空，
+	// 空闲对象槽指针为空
 	else
 	{
 		// 当前对象槽超出当前内存块最后一个对象槽，则分配一个新的内存区块
@@ -70,6 +70,8 @@ pointer MemoryPool<T,BlockSize>::allocate(size_t n, const T* hint)
 			currentSlot_ = reinterpret_cast<slot_pointer_>(body + bodyPadding);
 			// 末尾位置 为 区块起始位置加区块大小减去一个数据大小+1
 			lastSlot_ = reinterpret_cast<slot_pointer_>(newBlock + BlockSize - sizeof(slot_type_) + 1);
+			// 无需初始化 freeSlots_，freeslot自己维护着一个链表
+			// freeSlots_ = reinterpret_cast<slot_pointer_>(currentSlot_);
 		}
 
 		// 将当前对象槽强制类型转换后返回指定数据类型指针
