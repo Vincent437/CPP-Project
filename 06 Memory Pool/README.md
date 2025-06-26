@@ -1,4 +1,13 @@
 # Memory Pool
+This project has realized a dynamic memory allocation list queue based on C++ 11 *high performance memory pool*. The queue supports 30 Hz to 50 Hz data input and 10 Hz data output under *multithreading*. The project includes a self-implemented memory pool allocator. Can *improve memory allocation performance* to some extent, reduce the generation of memory fragmentation and memory allocation failure caused by the program crash.
+# Project Schema
+## Memory Pool Design
+Pointer, is a unique point of C/C++, in the program design, it is inevitable to operate the memory, but the convenience of direct operation of memory will also bring many hidden dangers to the program design, may encounter insufficient memory, allocation failure and other special cases, and each memory allocation needs to apply to the operating system, there is time and space overhead, efficiency is not high. In order to better manage and optimize program memory, memory pooling technology can be used to reduce the cost of operating memory to a certain extent and improve program efficiency. Therefore, in this project, a memory pool with good performance will be realized to solve some project requirements encountered in the process of work.
+## Linked List Stack
+In order to verify the performance of the memory pool design, it is also necessary to design a data structure that can be used for dynamic memory allocation as the carrier. The default allocator and memory pool are used as memory allocation tools respectively to carry out the same data input and output, and observe the allocation efficiency of both. The common test tool is the linked list stack structure, so the author will first implement a linked list stack, as a test to assign its performance tool.
+## Data Cache Pool
+Data pool can store multiple formats of data, and ensure data 'first-in, first-out' access, through the memory pool to improve the efficiency of data access. For some reason, the data cache queue implemented by the memory pool is not presented here. I believe that interested readers can implement the memory pool implementation and queue design by themselves.
+# Memory Pool
 本项目实现了一个基于 C++ 11 *高性能内存池*的*可动态内存分配*的链表队列，队列支持多线程下 30 Hz 到 50 Hz 的数据输入和 10 Hz 的数据输出，项目内含自实现的 内存池 分配器，可以在一定程度上*提升内存分配性能*，减少内存碎片的产生和内存分配失败引起的程序崩溃。
 # 项目架构
 ## 内存池设计
